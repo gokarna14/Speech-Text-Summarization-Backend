@@ -4,11 +4,16 @@ from flask_jwt import JWT, jwt_required
 # from security import authenticate, identity
 from dbInteractor import Text as TextDB
 from dbInteractor import Summary as SummaryDB
+from flask_cors import CORS, cross_origin
+
+from model import extractandfeature
+
 
 
 app = Flask(__name__)
 app.secret_key = 'super-secret'
 api = Api(app)
+cors = CORS(app , resources={r"/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}})
 
 
 texts = [
@@ -19,6 +24,10 @@ texts = [
 
 
 class Text(Resource):
+    def get(self):
+        return TextDB.get_max_id()[0]
+        
+        
     def post(self):
         request_data = request.get_json()
         if not request_data["text"]:
@@ -91,10 +100,31 @@ class SummaryList(Resource):
         return {"summaries" : SummaryDB.get_by_Id(id_, id_of)}, 201
 
 
+class GenerateSummary(Resource):
+    def post(self):
+        request_data = request.get_json()
+        
+        # print("\n\n")
+        
+        # print(request_data)
+        
+        summary = extractandfeature(request_data["text"], request_data["compression_ratio"])
+        
+        print(summary)
+        print("\n\n")
+        
+        return {"summary" : summary}, 201
+
 
 @app.route('/')
 def hello():
     return 'Hello, World!'
+
+
+# @app.route('/generateSummary', methods=['POST'])
+# def generateSummary():
+#     extractandfeature(text, compression_ratio)
+    
 
 
 api.add_resource(Text, '/text')
@@ -103,6 +133,8 @@ api.add_resource(TextByID, '/textByID/<string:text_id>')
 
 api.add_resource(Summarization, '/summary')
 api.add_resource(SummaryList, '/summaries')
+
+api.add_resource(GenerateSummary, '/generate_summary')
 
 
 

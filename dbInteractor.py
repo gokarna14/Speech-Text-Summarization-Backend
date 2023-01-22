@@ -82,6 +82,22 @@ class Text:
         
         
         return Text.get_json(cursor, query)
+    
+    @classmethod
+    def get_max_id(cls):
+        # print("HERE\n\n\n")
+        if not Text.connection.is_connected():
+            Text.start_connection()
+        
+        cursor = Text.connection.cursor()
+        cursor.execute("select database();")
+        cursor.fetchone()
+        
+        query = f"SELECT MAX(text_id) FROM text_;"
+        
+        
+        
+        return Text.get_json(cursor, query)
 
     
     @classmethod
@@ -184,7 +200,9 @@ class Summary:
         
         query = f"INSERT INTO summarization (summary, compression_ratio, text_id) VALUES ('{summary}', '{compression_ratio}', '{text_id}');"
         
-        print(query)
+        # print(query)
+        # print(query)
+        # print("\n\n\n\n\n")
         
         cursor.execute(query) 
         Summary.connection.commit()
