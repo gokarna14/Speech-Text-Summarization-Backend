@@ -13,7 +13,7 @@ from model import extractandfeature
 app = Flask(__name__)
 app.secret_key = 'super-secret'
 api = Api(app)
-cors = CORS(app , resources={r"/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}})
+# cors = CORS(app , resources={r"/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}})
 
 
 texts = [
