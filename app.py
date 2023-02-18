@@ -13,7 +13,7 @@ from model import extractandfeature
 app = Flask(__name__)
 app.secret_key = 'super-secret'
 api = Api(app)
-# cors = CORS(app , resources={r"/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}})
+cors = CORS(app , resources={r"/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}})
 
 
 texts = [
@@ -68,6 +68,10 @@ class Summarization(Resource):
 
         summary = request_data['summary']
         compression_ratio = request_data["compression_ratio"]
+
+        # print("\n\n\n")
+        # print(compression_ratio)
+
         text_id = request_data["text_id"]
 
         SummaryDB.add_summary(summary, compression_ratio, text_id)
@@ -104,12 +108,14 @@ class GenerateSummary(Resource):
     def post(self):
         request_data = request.get_json()
         
-        # print("\n\n")
+        print("\n\nRequest Data:\n")
         
-        # print(request_data)
+        print(request_data)
         
         summary = extractandfeature(request_data["text"], request_data["compression_ratio"])
         
+        print("\n\n")
+
         print(summary)
         print("\n\n")
         
