@@ -33,7 +33,7 @@ class Text(Resource):
         if not request_data["text"]:
             return {"mes" : "No text received !!"}
 
-        TextDB.add_text(request_data["text"])
+        # TextDB.add_text(request_data["text"])
 
         # jsonify is not really necessary when using Flask-restful
         return {"message" : "Added", "Text":request_data["text"]}, 201
