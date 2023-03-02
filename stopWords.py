@@ -177,4 +177,7 @@ stop_Words = ["i",
 "won't",
 "wouldn",
 "wouldn't",
+"its",
+"it",
+"ll"
 ]
