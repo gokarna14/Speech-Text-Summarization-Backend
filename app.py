@@ -6,7 +6,7 @@ from dbInteractor import Text as TextDB
 from dbInteractor import Summary as SummaryDB
 from flask_cors import CORS, cross_origin
 
-from model import extractandfeature
+from model import extractandfeature, get_abs
 
 
 
@@ -120,6 +120,26 @@ class GenerateSummary(Resource):
         print("\n\n")
         
         return {"summary" : summary}, 201
+    
+class GenerateAbsSummary(Resource):
+    def post(self):
+        request_data = request.get_json()
+        
+        print("\n\nRequest Data:\n")
+        
+        print(request_data)
+        
+        summary = extractandfeature(request_data["text"], request_data["compression_ratio"])
+
+        summary = get_abs(summary)
+        
+        print("\n\n")
+
+        print(summary)
+        print("\n\n")
+        
+        return {"summary" : summary}, 201
+        
 
 
 @app.route('/')
@@ -141,9 +161,11 @@ api.add_resource(Summarization, '/summary')
 api.add_resource(SummaryList, '/summaries')
 
 api.add_resource(GenerateSummary, '/generate_summary')
+api.add_resource(GenerateAbsSummary, '/generateAbs_summary')
 
 
 
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
+
