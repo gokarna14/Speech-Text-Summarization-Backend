@@ -29,7 +29,7 @@ class Text:
     connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="123570123570",
+            password="kshitiz123",
             port = 3306, # for Mamp users
             database='major_project'
         )
@@ -40,7 +40,7 @@ class Text:
             Text.connection = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="123570123570",
+                password="kshitiz123",
                 port = 3306, # for Mamp users
                 database='major_project'
                 )
@@ -134,7 +134,7 @@ class Summary:
     connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="123570123570",
+            password="kshitiz123",
             port = 3306, # for Mamp users
             database='major_project'
         )
@@ -145,7 +145,7 @@ class Summary:
             Summary.connection = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="123570123570",
+                password="kshitiz123",
                 port = 3306, # for Mamp users
                 database='major_project'
                 )
