@@ -5,8 +5,8 @@ from flask_jwt import JWT, jwt_required
 from dbInteractor import Text as TextDB
 from dbInteractor import Summary as SummaryDB
 from flask_cors import CORS, cross_origin
-
 from model import extractandfeature, get_abs
+from headingGenerator import header_generation
 
 
 app = Flask(__name__)
@@ -142,6 +142,30 @@ class GenerateAbsSummary(Resource):
         print("\n\n")
 
         return {"summary": summary}, 201
+    
+class GenerateHeading(Resource):
+    def get(self):
+        print("Inside get")
+
+        return {"message" : "This is the return"}
+    def post(self):
+        request_data = request.get_json()
+
+        print("\nGenerating heading\nRequest Data:\n")
+
+        print(request_data)
+
+        # summary = extractandfeature(
+        #     request_data["text"], request_data["compression_ratio"])
+
+        heading = header_generation(request_data["text"])
+
+        print("\n\n")
+
+        print(f"Heading generated : {heading}")
+        print("\n\n")
+
+        return heading, 201
 
 
 @app.route('/')
@@ -163,6 +187,8 @@ api.add_resource(SummaryList, '/summaries')
 
 api.add_resource(GenerateSummary, '/generate_summary')
 api.add_resource(GenerateAbsSummary, '/generateAbs_summary')
+
+api.add_resource(GenerateHeading, '/generateHeading')
 
 
 if __name__ == '__main__':
